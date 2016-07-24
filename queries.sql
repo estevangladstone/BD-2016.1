@@ -26,8 +26,17 @@ select escolas.nome, rede, localizacao, uf
 from escolas inner join municipios on escolas.municipio_id=municipio.id inner join estados on estado.id=municipio.estado_id
 where estados.regiao = 'Sudeste';
 
--- Envolve junção de três relações
+-- Envolve junção de duas relações
 -- Obtém todos os telefones da escola de nome CEFET CELSO SUCKOW DA FONSECA
 select codigo, numero 
-from escolas inner join telefoneEscola on telefoneEscola.escolas_id=escolas.id inner join telefones on telefoneEscola.telefone_id=telefones.id
+from escolas inner join telefones on telefones.id=escolas.id
 where nome = 'CEFET CELSO SUCKOW DA FONSECA';
+
+-- Obtém o número de escolas cadastradas no sistema por estado
+select count(distinct escolas.id), estados.nome, uf, regiao, (bandeira?)
+from escolas inner join municipios on escolas.municipio_id=municipio.id inner join estados on estado.id=municipio.estado_id
+
+-- -- Obtém o número de escolas cadastradas no sistema e o numero de escolas que possuem taxas preenchidas por estado
+-- select count(distinct escolas.id), estados.nome, uf, regiao, (bandeira?)
+-- from escolas inner join municipios on escolas.municipio_id=municipio.id inner join estados on estado.id=municipio.estado_id inner join taxas on escolas.id=taxas.escola_id
+-- where sasdasddsads
