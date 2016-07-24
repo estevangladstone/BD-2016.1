@@ -32,7 +32,7 @@
 						<?php } else { ?>
 							<th><?php echo $column ?></th>
 						<?php } ?>
-					<?php } unset($_SESSION['colunas']);//endforeach ?>
+					<?php } unset($_SESSION['colunas']); //endforeach ?>
 				</thead>
 				<!-- Linhas -->
 				<tbody>
