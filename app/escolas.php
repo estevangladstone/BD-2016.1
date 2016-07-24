@@ -22,7 +22,7 @@ foreach ($files as $filename) {
 	$escolas = array();
 
 	while (($linha = fgetcsv($csv, 0, $delimitador)) !== false) {
-	    array_push($escolas, ['rede' => $linha[6], 'localizacao' => $linha[5], 'nome' => $linha[8], 'municipio' => $linha[4]]);
+	    array_push($escolas, [$linha[6], $linha[5], $linha[8], $linha[4]]);
 	}
 
 	fclose($csv);
