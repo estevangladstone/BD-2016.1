@@ -1,4 +1,4 @@
-INSERT INTO estados (uf, nome, regiao) VALUES 
+INSERT INTO Estados (uf, nome, regiao) VALUES 
     ("AC", "Acre", "Norte"),
     ("AL", "Alagoas", "Nordeste"),
     ("AP", "Amapá", "Norte"),
