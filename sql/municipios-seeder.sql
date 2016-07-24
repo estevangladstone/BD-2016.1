@@ -1,4 +1,4 @@
-INSERT INTO municipios (nome, estado_id) VALUES
+INSERT INTO Municipios (nome, estado_id) VALUES
 	("ALTA FLORESTA D'OESTE","RO"),
 	("ARIQUEMES","RO"),
 	("CABIXI","RO"),
