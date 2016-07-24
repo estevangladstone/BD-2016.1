@@ -18,20 +18,18 @@ foreach ($files as $filename) {
 	}
 
 	$csv = fopen($filename.".csv", "r");
-	var_dump($csv);
-	die();
 
-	$congressistas = array();
+	$escolas = array();
 
 	while (($linha = fgetcsv($csv, 0, $delimitador)) !== false) {
-	    array_push($congressistas, ['rede' => $linha[6], 'localizacao' => $linha[5], 'nome' => $linha[8], 'municipio' => $linha[4]]);
+	    array_push($escolas, ['rede' => $linha[6], 'localizacao' => $linha[5], 'nome' => $linha[8], 'municipio' => $linha[4]]);
 	}
 
 	fclose($csv);
 
 	$file2 = fopen("escolas-seeder.sql", "a");
 
-	foreach ($teste as $municipio) {
+	foreach ($escolas as $escola) {
 		$str = "(\"".$escola[0]."\",\"".$escola[1]."\",\"".$escola[2]."\",\"".$escola[3]."\"),";
 		fwrite($file2, $str);
 	}
