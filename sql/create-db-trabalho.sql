@@ -6,6 +6,7 @@
 CREATE TABLE TerceirizadaEscola (
 terceirazada_id int,
 escola_id int,
+data_contrato date,
 PRIMARY KEY(terceirazada_id,escola_id)
 );
 

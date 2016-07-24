@@ -8,11 +8,13 @@ else
 	geMu = false
 end
 print(geMu)
-io.write("Light Version? (y for yes)")
-io.flush()
-local light = io.read()
-if light == "y" then
-	light = 3000
+if not geMu then
+	io.write("Light Version? (y for yes)")
+	io.flush()
+	light = io.read()
+	if light == "y" then
+		light = 1000
+	end
 end
 
 -- Todos os arquivos de rendimento
@@ -38,6 +40,9 @@ for x, file in pairs(files) do
 	print (x)
 	for line in file:lines() do
 		counter = counter + 1
+		if counter >= (light or 1000000) then
+			break
+		end
 		local i = 0
 		local stringEscolas = ""
 		local escola_id, escola_rede, escola_nome, escola_localizacao, escola_municipio_id = "", "", "", "", ""
@@ -109,10 +114,6 @@ for x, file in pairs(files) do
 			if not municipio_happen then
 				municipios:write(stringMunicipios)
 			end
-		end
-
-		if counter >= light then
-			break
 		end
 	end
 	file:close()
