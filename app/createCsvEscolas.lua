@@ -55,15 +55,15 @@ for x, file in pairs(files) do
 			if v ~= "" then
 				i = i + 1
 				if i == 4 then
-					municipio_id = v
+					municipio_id = "\"" .. v .. "\""
 				elseif i == 6 then
-					localizacao = v
+					localizacao = "\"" .. v .. "\""
 				elseif i == 7 then
-					rede = v
+					rede = "\"" .. v .. "\""
 				elseif i == 9 then
-					nome = v
+					nome = "\"" .. v .. "\""
 				elseif i == 8 then
-					id = v
+					id = "\"" .. v .. "\""
 				end
 			end
 		end
