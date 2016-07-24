@@ -4,7 +4,7 @@
 
 
 CREATE TABLE Taxas (
-id int PRIMARY KEY,
+id int PRIMARY KEY AUTO_INCREMENT,
 ano int,
 serie varchar(255),
 tipo varchar(255),
@@ -12,7 +12,7 @@ escola_id int
 );
 
 CREATE TABLE Escolas (
-id int PRIMARY KEY,
+id int PRIMARY KEY AUTO_INCREMENT,
 rede varchar(255),
 nome varchar(255),
 localizacao varchar(255),
@@ -27,7 +27,7 @@ bandeira blob
 );
 
 CREATE TABLE Terceirizadas (
-id int PRIMARY KEY,
+id int PRIMARY KEY AUTO_INCREMENT,
 tipo_servico varchar(255),
 nome varchar(255)
 );
@@ -41,7 +41,7 @@ FOREIGN KEY(escola_id) REFERENCES Escolas (id)
 );
 
 CREATE TABLE Telefones (
-id int PRIMARY KEY,
+id int PRIMARY KEY AUTO_INCREMENT,
 codigo int,
 numero int,
 escola_id int,
@@ -49,7 +49,7 @@ FOREIGN KEY(escola_id) REFERENCES Escolas (id)
 );
 
 CREATE TABLE Municipios (
-id int PRIMARY KEY,
+id int PRIMARY KEY AUTO_INCREMENT,
 nome varchar(255),
 populacao int,
 estado_id varchar(255),
