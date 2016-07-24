@@ -41,6 +41,7 @@ for x, file in pairs(files) do
 	for line in file:lines() do
 		counter = counter + 1
 		if counter >= (light or 1000000) then
+			print (light)
 			break
 		end
 		local i = 0
@@ -89,10 +90,13 @@ for x, file in pairs(files) do
 					escola_id = "\"" .. v .. "\""
 					taxa_escola_id = "\"" .. v .. "\""
 				elseif (i >= 10 and i <= 18) or (i >= 22 and i <= 25) then
+					v = string.gsub(v, ",", ".")
 					table.insert(taxa_aprov, v)
 				elseif (i >= 28 and i <= 36) or (i >= 40 and i <= 43) then
+					v =  string.gsub(v, ",", ".")
 					table.insert(taxa_reprov, v)
 				elseif (i >= 46 and i <= 54) or (i >= 58 and i <= 61) then
+					v =  string.gsub(v, ",", ".")
 					table.insert(taxa_aband, v)
 				end
 			end
