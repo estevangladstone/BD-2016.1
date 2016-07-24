@@ -8,6 +8,12 @@ else
 	geMu = false
 end
 print(geMu)
+io.write("Light Version? (y for yes)")
+io.flush()
+local light = io.read()
+if light == "y" then
+	light = 3000
+end
 
 -- Todos os arquivos de rendimento
 table.insert(files, io.open("rendimentoescolaCO.csv", "r"))
@@ -26,9 +32,12 @@ local taxas_aprov = io.open("../planilhas/taxas_aprov.csv", "w+")
 local taxas_reprov = io.open("../planilhas/taxas_reprov.csv", "w+")
 local taxas_aband = io.open("../planilhas/taxas_aband.csv", "w+")
 
+
 for x, file in pairs(files) do
+	local counter = 0
 	print (x)
 	for line in file:lines() do
+		counter = counter + 1
 		local i = 0
 		local stringEscolas = ""
 		local escola_id, escola_rede, escola_nome, escola_localizacao, escola_municipio_id = "", "", "", "", ""
@@ -100,6 +109,10 @@ for x, file in pairs(files) do
 			if not municipio_happen then
 				municipios:write(stringMunicipios)
 			end
+		end
+
+		if counter >= light then
+			break
 		end
 	end
 	file:close()
