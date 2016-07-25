@@ -45,13 +45,13 @@ group by Estado.uf;
 
 -- Consulta envovendo operações sobre conjuntos
 -- As escolas que tem reprovacão maior que 50% ou abandono maior que 50% em qualquer ano
-select distinct escola.nome
-from escola left join taxa on escola.id = taxa.escola_id
-where taxa.tipo = 'Reprovação' and taxa.valor >= 50
+select distinct Escola.nome
+from Escola left join Taxa on Escola.id = Taxa.escola_id
+where Taxa.tipo = 'Reprovação' and Taxa.valor >= 50
 union
-select distinct escola.nome
-from escola left join taxa on escola.id = taxa.escola_id
-where taxa.tipo = 'Abandono' and taxa.valor >= 50
+select distinct Escola.nome
+from escola left join taxa on Escola.id = Taxa.escola_id
+where Taxa.tipo = 'Abandono' and Taxa.valor >= 50
 
 -- Consulta envolvendo função de agregação
 -- Obtém o número de Escola cadastradas no sistema por estado
@@ -79,12 +79,19 @@ select name from
 (
     select Estado.nome as name, avg(taxa.valor) as media
     from estado join municipio on estado.id = municipio.estado_id left join escola on municipio.id = escola.municipio_id left join taxa on escola.id = taxa.escola_id
-    group by name
+    group by Estado.UF
 ) as t
 where t.media >= 30
 
 -- Consulta envovendo subconsultas aninhadas
-
+-- Escolas que possuem mais de 2 terceirizadas contratadas
+select name from
+(
+    select Escola.nome as name, count(terceirizada.id) as c
+    from TerceirizadaEscola join Terceirizada on Terceirizada.id = TerceirizadaEscola.terceirizada_id join Escola on Escola.id = TerceirizadaEscola.escola_id
+    group by Escola.id
+) as t
+where c > 2
 
 -- Consulta do tipo relatório
 -- A escola com maior taxa de abandono do terceiro ano do ensino medio na cidade do rio de janeiro agrupadas por rede
