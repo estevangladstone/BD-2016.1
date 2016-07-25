@@ -1,16 +1,16 @@
 -- Queries
 
 -- Envolve apenas seleção e projeção
--- Obtém o id, nome, população, e UF de todos os municipios cadastrados com UF igual a RJ 
-select id, nome, populacao, estado_id as uf from municipios where uf = 'RJ';
+-- Obtém o id, nome, população, e UF de todos os municipios cadastrados com UF igual a RJ
+select id, nome, populacao, estado_id as uf from municipio where uf = 'RJ';
 
 
 
 -- Envolve junção de apenas duas relações
--- Obtém o nome, localização, rede, nome do municipio e UF de todas as escolas cuja UF é RJ ou RS
+-- Obtém o nome, localização, rede, nome do municipio e UF de todas as escolas cuja UF é RO ou RS
 select escola.nome, localizacao, rede, municipio.nome as municipio, municipio.estado_id as uf
-from escolas inner join municipios on escolas.municipio_id=municipio.id
-where uf = 'RJ' or uf = 'RS';
+from escola inner join municipio on escola.municipio_id=municipio.id
+where municipio.estado_id = 'RO' or municipio.estado_id = 'RS';
 
 -- Envolve junção externa de apenas duas relações
 -- Todas as escolas que não tem taxas associadas apesar de cadastradas no sistema
@@ -20,7 +20,7 @@ where rede = 'Federal' and  taxas.id = null;
 
 -- Envolve junção de apenas duas relações
 -- Obtém todos os telefones da escola de nome CEFET CELSO SUCKOW DA FONSECA
-select codigo, numero 
+select codigo, numero
 from escolas inner join telefones on telefones.escola_id=escolas.id
 where nome = 'CEFET CELSO SUCKOW DA FONSECA';
 
@@ -33,7 +33,7 @@ where rede = 'Federal' and ( (taxas.tipo = null or taxas.tipo = 'Aprovação') a
 
 
 -- Envolve junção de três relações
--- Obtém o nome, rede, localização e uf de todas as escolas da região Sudeste 
+-- Obtém o nome, rede, localização e uf de todas as escolas da região Sudeste
 select escolas.nome, rede, localizacao, uf
 from escolas inner join municipios on escolas.municipio_id=municipio.id inner join estados on estado.id=municipio.estado_id
 where estados.regiao = 'Sudeste';
@@ -48,6 +48,14 @@ group by estado.uf;
 
 
 -- Consulta envovendo operações sobre conjuntos
+-- As escolas que tem reprovacão maior que 50% ou abandono maior que 50% em qualquer ano
+select distinct escola.nome
+from escola left join taxa on escola.id = taxa.escola_id
+where taxa.tipo = 'Reprovação' and taxa.valor >= 50
+union
+select distinct escola.nome
+from escola left join taxa on escola.id = taxa.escola_id
+where taxa.tipo = 'Abandono' and taxa.valor >= 50
 
 -- Consulta envovendo operações sobre conjuntos
 
@@ -96,4 +104,3 @@ group by escolas.rede;
 -- select count(distinct escolas.id), estados.nome, uf, regiao, (bandeira?)
 -- from escolas inner join municipios on escolas.municipio_id=municipio.id inner join estados on estado.id=municipio.estado_id inner join taxas on escolas.id=taxas.escola_id
 -- where sasdasddsads
-
