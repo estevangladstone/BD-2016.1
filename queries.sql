@@ -4,8 +4,6 @@
 -- Obtém o id, nome, população, e UF de todos os municipios cadastrados com UF igual a RJ
 select id, nome, populacao, estado_id as uf from municipio where uf = 'RJ';
 
-
-
 -- Envolve junção de apenas duas relações
 -- Obtém o nome, localização, rede, nome do municipio e UF de todas as escolas cuja UF é RO ou RS
 select escola.nome, localizacao, rede, municipio.nome as municipio, municipio.estado_id as uf
@@ -15,8 +13,8 @@ where municipio.estado_id = 'RO' or municipio.estado_id = 'RS';
 -- Envolve junção externa de apenas duas relações
 -- Todas as escolas que não tem taxas associadas apesar de cadastradas no sistema
 select nome, rede, localizacao
-from escolas left join taxas on escolas.id=taxas.escola_id
-where rede = 'Federal' and  taxas.id = null;
+from escola left join taxa on escola.id=taxa.escola_id
+where rede = 'Federal' and taxa.id = null;
 
 -- Envolve junção de apenas duas relações
 -- Obtém todos os telefones da escola de nome CEFET CELSO SUCKOW DA FONSECA
@@ -29,7 +27,6 @@ where nome = 'CEFET CELSO SUCKOW DA FONSECA';
 select nome, localizacao, (.colocar taxas aqui.)
 from escolas left join taxas on escolas.id=taxas.escola_id
 where rede = 'Federal' and ( (taxas.tipo = null or taxas.tipo = 'Aprovação') and (taxas.serie = null or taxas.serie between 10 and 13));
-
 
 
 -- Envolve junção de três relações
@@ -45,8 +42,6 @@ from escolas inner join taxas on escolas.id=taxas.escola_id inner join municipio
 where taxas.serie = 12
 group by estado.uf;
 
-
-
 -- Consulta envovendo operações sobre conjuntos
 -- As escolas que tem reprovacão maior que 50% ou abandono maior que 50% em qualquer ano
 select distinct escola.nome
@@ -56,10 +51,6 @@ union
 select distinct escola.nome
 from escola left join taxa on escola.id = taxa.escola_id
 where taxa.tipo = 'Abandono' and taxa.valor >= 50
-
--- Consulta envovendo operações sobre conjuntos
-
-
 
 -- Consulta envolvendo função de agregação
 -- Obtém o número de escolas cadastradas no sistema por estado
@@ -82,6 +73,14 @@ group by regiao;
 
 
 -- Consulta envovendo subconsultas aninhadas
+-- Estados que possui média de reprovacao das escolas maior ou igual a 30%
+select name from
+(
+    select Estado.nome as name, avg(taxa.valor) as media
+    from estado join municipio on estado.id = municipio.estado_id left join escola on municipio.id = escola.municipio_id left join taxa on escola.id = taxa.escola_id
+    group by name
+) as t
+where t.media >= 30
 
 -- Consulta envovendo subconsultas aninhadas
 
