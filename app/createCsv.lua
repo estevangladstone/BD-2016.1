@@ -105,9 +105,9 @@ for x, file in pairs(files) do
 		escolas:write(stringEscolas)
 
 		for k in pairs(taxa_aprov) do
-			stringTaxaAprovacao = taxa_ano .. ";" .. "\"" .. k .. "\"" .. ";" .. "\"" .. (taxa_aprov[k] or 0) .. "\"" .. ";" .. "\"Aprovacao\"" .. ";" .. taxa_escola_id .. "\n"
-			stringTaxaReprovacao = taxa_ano .. ";" .. "\"" .. k .. "\"" .. ";" .. "\"" .. (taxa_reprov[k] or 0) .. "\"" .. ";" .. "\"Reprovacao\"" .. ";" .. taxa_escola_id .. "\n"
-			stringTaxaAbandono = taxa_ano .. ";" .. "\"" .. k .. "\"" .. ";" .. "\"" .. (taxa_aband[k] or 0) .. "\"" .. ";" .. "\"Aprovacao\"" .. ";" .. taxa_escola_id .. "\n"
+			stringTaxaAprovacao = taxa_ano .. ";" .. "\"" .. k .. "\"" .. ";" .. "\"" .. (taxa_aprov[k] or 0) .. "\"" .. ";" .. "\"Aprovacão\"" .. ";" .. taxa_escola_id .. "\n"
+			stringTaxaReprovacao = taxa_ano .. ";" .. "\"" .. k .. "\"" .. ";" .. "\"" .. (taxa_reprov[k] or 0) .. "\"" .. ";" .. "\"Reprovacão\"" .. ";" .. taxa_escola_id .. "\n"
+			stringTaxaAbandono = taxa_ano .. ";" .. "\"" .. k .. "\"" .. ";" .. "\"" .. (taxa_aband[k] or 0) .. "\"" .. ";" .. "\"Abandono\"" .. ";" .. taxa_escola_id .. "\n"
 			taxas_aprov:write(stringTaxaAprovacao)
 			taxas_reprov:write(stringTaxaReprovacao)
 			taxas_aband:write(stringTaxaAbandono)
