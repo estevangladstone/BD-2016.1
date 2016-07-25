@@ -126,51 +126,103 @@ A seguir, apresentamos uma lista de consultas, com sua descrição (o que envolve 
 
 -- Id, nome, população e id do estado de todas os municípios do estado do Rio de Janeiro (envolve apenas seleção e projeção)
 \begin{lstlisting}[frame=single, style=customsql]
-SELECT id, nome, populacao, estado_id AS uf FROM municipios WHERE uf = 'RJ';
+SELECT id, nome, populacao, estado_id FROM Municipio WHERE estado_id = 'RJ';
 \end{lstlisting} 
 
 
--- Nome, localização, rede e munícipio de todas escolas do estado do RJ ou do RS (envolve junção de apenas duas relações)
+-- Obtém o nome, localização, rede, nome do municipio e UF de todas as Escolas cuja UF é MG ou PR (envolve junção de apenas duas relações)
 \begin{lstlisting}[frame=single, style=customsql]
-SELECT escola.nome, localizacao, rede, municipio.nome AS municipio, municipio.estado_id AS uf
-FROM escolas INNER JOIN municipios ON escolas.municipio_id=municipio.id
-WHERE uf = 'RJ' OR uf = 'RS';
+SELECT Escola.nome, localizacao, rede, Municipio.nome AS municipio, Municipio.estado_id AS uf
+FROM Escola INNER JOIN Municipio ON Escola.municipio_id=Municipio.id
+WHERE Municipio.estado_id = 'MG' OR Municipio.estado_id = 'PR';
 \end{lstlisting}
 
--- Todas as escolas federais que não tem taxas associadas apesar de cadastradas no sistema (envolve junção externa de apenas duas relações)
-\begin{lstlisting}[frame=single, style=customsql]
-SELECT nome, rede, localizacao
-FROM escolas LEFT JOIN taxas ON escolas.id=taxas.escola_id
-WHERE rede = 'Federal' AND taxas.id = null;
-\end{lstlisting}
-
--- Nomes, localização e taxas de todas as escolas da rede Federal e suas respectivas taxas de aprovação do ensino medio caso existam (envolve junção externa de apenas duas relações)
-\begin{lstlisting}[frame=single, style=customsql]
-SELECT nome, localizacao, (.colocar taxas aqui.)
-FROM escolas LEFT JOIN taxas ON escolas.id=taxas.escola_id
-WHERE rede = 'Federal' AND ( (taxas.tipo = null OR taxas.tipo = 'Aprovação') AND (taxas.serie = null or taxas.serie LIKE '%Médio'));
-\end{lstlisting}
-
--- Obtém o nome, rede, localização e uf de todas as escolas da região Sudeste (envolve junção de três relações)
-\begin{lstlisting}[frame=single, style=customsql]
-SELECT escolas.nome, rede, localizacao, uf
-FROM escolas INNER JOIN municipios ON escolas.municipio_id=municipio.id INNER JOIN estados ON estado.id=municipio.estado_id
-WHERE estados.regiao = 'Sudeste';
-\end{lstlisting}
-
--- Obtém todos os telefones da escola de nome CEFET CELSO SUCKOW DA FONSECA (envolve junção de duas relações)
+Obtém todos os telefones da escola de nome CEFET CELSO SUCKOW DA FONSECA (envolve junção de apenas duas relações)
 \begin{lstlisting}[frame=single, style=customsql]
 SELECT codigo, numero 
-FROM escolas INNER JOIN telefones ON telefones.escola_id=escolas.id
+FROM Escola INNER JOIN Telefone ON Telefone.escola_id=Escola.id
 WHERE nome = 'CEFET CELSO SUCKOW DA FONSECA';
 \end{lstlisting}
 
--- Obtém o número de escolas cadastradas no sistema por estado
+Obtém o nome, rede, localização e uf de todas as Escola da região Sudeste (envolve junção de três relações)
 \begin{lstlisting}[frame=single, style=customsql]
-SELECT count(distinct escolas.id), estados.nome, uf, regiao, (bandeira?)
-FROM escolas INNER JOIN municipios ON escolas.municipio_id=municipio.id INNER JOIN estados ON estado.id=municipio.estado_id
-\end{lstlisting} 
+SELECT Escola.nome, rede, localizacao, uf
+FROM Escola INNER JOIN Municipio ON Escola.municipio_id=Municipio.id INNER JOIN Estado ON Estado.uf=Municipio.estado_id
+WHERE Estado.regiao = 'Sudeste';
+\end{lstlisting}
 
+Obtém a média das taxas de aprovação do terceiro ano do ensino medio por estado (envolve junção de três relações e um agrupamento)
+\begin{lstlisting}[frame=single, style=customsql]
+SELECT avg(Taxa.valor) AS mediaAprovacao, uf, bandeira
+FROM Escola INNER JOIN Taxa ON Escola.id=Taxa.escola_id INNER JOIN Municipio ON Escola.municipio_id=Municipio.id INNER JOIN Estado ON Estado.uf=Municipio.estado_id
+WHERE Taxa.serie = 12
+GROUP BY Estado.uf;
+\end{lstlisting}
+
+As escolas que tem reprovacão maior que 50\% ou abandono maior que 50\% em qualquer ano (consulta envovendo operações sobre conjuntos)
+\begin{lstlisting}[frame=single, style=customsql]
+SELECT distinct Escola.nome
+FROM Escola left JOIN Taxa on Escola.id = Taxa.escola_id
+WHERE Taxa.tipo = 'Reprovação' and Taxa.valor >= 50
+union
+SELECT distinct Escola.nome
+FROM escola left JOIN taxa on Escola.id = Taxa.escola_id
+WHERE Taxa.tipo = 'Abandono' and Taxa.valor >= 50
+\end{lstlisting}
+
+
+Obtém o número de Escola cadastradas no sistema por estado (consulta envolvendo função de agregação)
+\begin{lstlisting}[frame=single, style=customsql]
+SELECT count(distinct Escola.id), Estado.nome, uf, regiao, bandeira
+FROM Escola INNER JOIN Municipio ON Escola.municipio_id=Municipio.id INNER JOIN Estado ON Estado.uf=Municipio.estado_id
+GROUP BY Estado.uf
+\end{lstlisting}
+
+Número de Escola cadastradas que tem taxa de aprovação acima de 50\% do terceiro ano do ensino medio por região (consulta envolvendo função de agregação)
+\begin{lstlisting}[frame=single, style=customsql]
+SELECT count(distinct Escola.id), regiao
+FROM Escola INNER JOIN Municipio ON Escola.municipio_id=Municipio.id INNER JOIN Estado ON Estado.uf=Municipio.estado_id LEFT JOIN Taxa ON Escola.id=Taxa.escola_id
+WHERE Taxa.valor > 50.0 AND Taxa.serie = 12 AND Taxa.tipo = 'Aprovação'
+GROUP BY regiao;
+\end{lstlisting}
+
+Estados que possui média de reprovacao das escolas maior ou igual a 30\% (consulta envovendo subconsultas aninhadas)
+\begin{lstlisting}[frame=single, style=customsql]
+SELECT name FROM
+(
+    SELECT Estado.nome as name, avg(taxa.valor) as media
+    FROM estado JOIN municipio on estado.id = municipio.estado_id left JOIN escola on municipio.id = escola.municipio_id left JOIN taxa on escola.id = taxa.escola_id
+    group by Estado.UF
+) as t
+WHERE t.media >= 30
+\end{lstlisting}
+
+Escolas que possuem mais de 2 terceirizadas contratadas (consulta envovendo subconsultas aninhadas)
+\begin{lstlisting}[frame=single, style=customsql]
+SELECT name FROM
+(
+    SELECT Escola.nome as name, count(terceirizada.id) as c
+    FROM TerceirizadaEscola JOIN Terceirizada on Terceirizada.id = TerceirizadaEscola.terceirizada_id JOIN Escola on Escola.id = TerceirizadaEscola.escola_id
+    group by Escola.id
+) as t
+WHERE c > 2
+\end{lstlisting}
+
+A escola com maior taxa de reprovação do terceiro ano do ensino medio na cidade do rio de janeiro agrupadas por rede (consulta do tipo relatório)
+\begin{lstlisting}[frame=single, style=customsql]
+SELECT max(Taxa.valor), Escola.nome, rede, localizacao
+FROM Escola INNER JOIN Taxa ON Escola.id=Taxa.escola_id
+WHERE Taxa.serie = 12 AND Taxa.tipo = 'Reprovação'
+GROUP BY Escola.rede;
+\end{lstlisting}
+
+A escola com menor taxa de aprovação do terceiro ano do ensino medio na cidade do rio de janeiro agrupadas por rede (consulta do tipo relatório)
+\begin{lstlisting}[frame=single, style=customsql]
+SELECT min(Taxa.valor), Escola.nome, rede, localizacao
+FROM Escola INNER JOIN Taxa ON Escola.id=Taxa.escola_id
+WHERE Taxa.serie = 12 AND Taxa.tipo = 'Aprovação'
+GROUP BY Escola.rede;
+\end{lstlisting}
 
 \section{Participações}
 
