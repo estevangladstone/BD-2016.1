@@ -5,10 +5,10 @@
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `Escolas`
+-- Estrutura da tabela `Escola`
 --
 
-CREATE TABLE `Escolas` (
+CREATE TABLE `Escola` (
   `id` int(11) NOT NULL,
   `rede` varchar(255) DEFAULT NULL,
   `nome` varchar(255) DEFAULT NULL,
@@ -19,10 +19,10 @@ CREATE TABLE `Escolas` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `Estados`
+-- Estrutura da tabela `Estado`
 --
 
-CREATE TABLE `Estados` (
+CREATE TABLE `Estado` (
   `uf` varchar(255) NOT NULL,
   `nome` varchar(255) DEFAULT NULL,
   `regiao` varchar(255) DEFAULT NULL,
@@ -32,10 +32,10 @@ CREATE TABLE `Estados` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `Municipios`
+-- Estrutura da tabela `Municipio`
 --
 
-CREATE TABLE `Municipios` (
+CREATE TABLE `Municipio` (
   `id` int(11) NOT NULL,
   `nome` varchar(255) DEFAULT NULL,
   `populacao` int(11) DEFAULT NULL,
@@ -45,10 +45,10 @@ CREATE TABLE `Municipios` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `Taxas`
+-- Estrutura da tabela `Taxa`
 --
 
-CREATE TABLE `Taxas` (
+CREATE TABLE `Taxa` (
   `id` int(11) NOT NULL,
   `ano` int(11) DEFAULT NULL,
   `serie` varchar(255) DEFAULT NULL,
@@ -60,10 +60,10 @@ CREATE TABLE `Taxas` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `Telefones`
+-- Estrutura da tabela `Telefone`
 --
 
-CREATE TABLE `Telefones` (
+CREATE TABLE `Telefone` (
   `id` int(11) NOT NULL,
   `codigo` int(11) DEFAULT NULL,
   `numero` int(11) DEFAULT NULL,
@@ -77,17 +77,17 @@ CREATE TABLE `Telefones` (
 --
 
 CREATE TABLE `TerceirizadaEscola` (
-  `terceirazada_id` int(11) NOT NULL,
+  `terceirizada_id` int(11) NOT NULL,
   `escola_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `Terceirizadas`
+-- Estrutura da tabela `Terceirizada`
 --
 
-CREATE TABLE `Terceirizadas` (
+CREATE TABLE `Terceirizada` (
   `id` int(11) NOT NULL,
   `tipo_servico` varchar(255) DEFAULT NULL,
   `nome` varchar(255) DEFAULT NULL
@@ -98,35 +98,35 @@ CREATE TABLE `Terceirizadas` (
 --
 
 --
--- Indexes for table `Escolas`
+-- Indexes for table `Escola`
 --
-ALTER TABLE `Escolas`
+ALTER TABLE `Escola`
   ADD PRIMARY KEY (`id`),
   ADD KEY `municipio_id` (`municipio_id`);
 
 --
--- Indexes for table `Estados`
+-- Indexes for table `Estado`
 --
-ALTER TABLE `Estados`
+ALTER TABLE `Estado`
   ADD PRIMARY KEY (`uf`);
 
 --
--- Indexes for table `Municipios`
+-- Indexes for table `Municipio`
 --
-ALTER TABLE `Municipios`
+ALTER TABLE `Municipio`
   ADD PRIMARY KEY (`id`),
   ADD KEY `estado_id` (`estado_id`);
 
 --
--- Indexes for table `Taxas`
+-- Indexes for table `Taxa`
 --
-ALTER TABLE `Taxas`
+ALTER TABLE `Taxa`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `Telefones`
+-- Indexes for table `Telefone`
 --
-ALTER TABLE `Telefones`
+ALTER TABLE `Telefone`
   ADD PRIMARY KEY (`id`),
   ADD KEY `escola_id` (`escola_id`);
 
@@ -134,13 +134,13 @@ ALTER TABLE `Telefones`
 -- Indexes for table `TerceirizadaEscola`
 --
 ALTER TABLE `TerceirizadaEscola`
-  ADD PRIMARY KEY (`terceirazada_id`,`escola_id`),
+  ADD PRIMARY KEY (`terceirizada_id`,`escola_id`),
   ADD KEY `escola_id` (`escola_id`);
 
 --
--- Indexes for table `Terceirizadas`
+-- Indexes for table `Terceirizada`
 --
-ALTER TABLE `Terceirizadas`
+ALTER TABLE `Terceirizada`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -148,39 +148,37 @@ ALTER TABLE `Terceirizadas`
 --
 
 --
--- AUTO_INCREMENT for table `Taxas`
+-- AUTO_INCREMENT for table `Taxa`
 --
-ALTER TABLE `Taxas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154417;
+ALTER TABLE `Taxa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `Terceirizada`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- Constraints for dumped tables
 --
 
 --
--- Limitadores para a tabela `Escolas`
+-- Limitadores para a tabela `Escola`
 --
-ALTER TABLE `Escolas`
-  ADD CONSTRAINT `escolas_ibfk_1` FOREIGN KEY (`municipio_id`) REFERENCES `Municipios` (`id`);
+ALTER TABLE `Escola`
+  ADD CONSTRAINT `Escola_ibfk_1` FOREIGN KEY (`municipio_id`) REFERENCES `Municipio` (`id`);
 
 --
--- Limitadores para a tabela `Municipios`
+-- Limitadores para a tabela `Municipio`
 --
-ALTER TABLE `Municipios`
-  ADD CONSTRAINT `municipios_ibfk_1` FOREIGN KEY (`estado_id`) REFERENCES `Estados` (`uf`);
+ALTER TABLE `Municipio`
+  ADD CONSTRAINT `Municipio_ibfk_1` FOREIGN KEY (`estado_id`) REFERENCES `Estado` (`uf`);
 
 --
--- Limitadores para a tabela `Telefones`
+-- Limitadores para a tabela `Telefone`
 --
-ALTER TABLE `Telefones`
-  ADD CONSTRAINT `telefones_ibfk_1` FOREIGN KEY (`escola_id`) REFERENCES `Escolas` (`id`);
+ALTER TABLE `Telefone`
+  ADD CONSTRAINT `Telefone_ibfk_1` FOREIGN KEY (`escola_id`) REFERENCES `Escola` (`id`);
 
 --
 -- Limitadores para a tabela `TerceirizadaEscola`
 --
 ALTER TABLE `TerceirizadaEscola`
-  ADD CONSTRAINT `terceirizadaescola_ibfk_1` FOREIGN KEY (`terceirazada_id`) REFERENCES `Terceirizadas` (`id`),
-  ADD CONSTRAINT `terceirizadaescola_ibfk_2` FOREIGN KEY (`escola_id`) REFERENCES `Escolas` (`id`);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  ADD CONSTRAINT `terceirizadaescola_ibfk_1` FOREIGN KEY (`terceirizada_id`) REFERENCES `Terceirizada` (`id`),
+  ADD CONSTRAINT `terceirizadaescola_ibfk_2` FOREIGN KEY (`escola_id`) REFERENCES `Escola` (`id`);
