@@ -19,7 +19,7 @@ where rede = 'Federal' and  taxas.id = null;
 -- Envolve junção de apenas duas relações
 -- Obtém todos os telefones da escola de nome CEFET CELSO SUCKOW DA FONSECA
 select codigo, numero 
-from escolas inner join telefones on telefones.id=escolas.id
+from escolas inner join telefones on telefones.escola_id=escolas.id
 where nome = 'CEFET CELSO SUCKOW DA FONSECA';
 
 -- Envolve junção externa de apenas duas relações

@@ -1,8 +1,10 @@
 \documentclass[12pt]{article}
 
 \usepackage{sbc-template}
-
+\usepackage[brazilian]{babel}
 \usepackage{graphicx,url}
+\usepackage{listings}
+\lstset{language=SQL} 
 
 %\usepackage[brazil]{babel}   
 \usepackage[latin1]{inputenc}  
@@ -10,23 +12,12 @@
      
 \sloppy
 
-\title{Instructions for Authors of SBC Conferences\\ Papers and Abstracts}
+\title{Modelagem e consultas de dados relativos a taxas de rendimento escolar na educação básica brasileira}
 
-\author{Luciana P. Nedel\inst{1}, Rafael H. Bordini\inst{2}, Flávio Rech
-  Wagner\inst{1}, Jomi F. Hübner\inst{3} }
+\author{Estevan Gladstone\inst{1}, João Luis Guio\inst{1}, Matheus Andrade\inst{1}, Tiago Montalvão\inst{1} }
 
-
-\address{Instituto de Informática -- Universidade Federal do Rio Grande do Sul
-  (UFRGS)\\
-  Caixa Postal 15.064 -- 91.501-970 -- Porto Alegre -- RS -- Brazil
-\nextinstitute
-  Department of Computer Science -- University of Durham\\
-  Durham, U.K.
-\nextinstitute
-  Departamento de Sistemas e Computação\\
-  Universidade Regional de Blumenal (FURB) -- Blumenau, SC -- Brazil
-  \email{\{nedel,flavio\}@inf.ufrgs.br, R.Bordini@durham.ac.uk,
-  jomi@inf.furb.br}
+\address{Departamento de Ciência da Computação\\ Universidade Federal do Rio de Janeiro
+  (UFRJ)\\
 }
 
 \begin{document} 
@@ -34,119 +25,153 @@
 \maketitle
 
 \begin{abstract}
-  This meta-paper describes the style to be used in articles and short papers
-  for SBC conferences. For papers in English, you should add just an abstract
-  while for the papers in Portuguese, we also ask for an abstract in
-  Portuguese (``resumo''). In both cases, abstracts should not have more than
-  10 lines and must be in the first page of the paper.
+  This paper describes the process of modeling a database found in a goverment
+  website, since the creation of an ER model, going through the logical model
+  up to the creation of tables in a SQL physical system through the MySQL Database
+  Management System.
+  A set of queries is presented together with the Web application developed to
+  access the database.
 \end{abstract}
      
 \begin{resumo} 
-  Este meta-artigo descreve o estilo a ser usado na confecção de artigos e
-  resumos de artigos para publicação nos anais das conferências organizadas
-  pela SBC. É solicitada a escrita de resumo e abstract apenas para os artigos
-  escritos em português. Artigos em inglês deverão apresentar apenas abstract.
-  Nos dois casos, o autor deve tomar cuidado para que o resumo (e o abstract)
-  não ultrapassem 10 linhas cada, sendo que ambos devem estar na primeira
-  página do artigo.
+  Este artigo descreve o processo de modelagem de uma base de dados encontrada
+  em site do governo, desde a criação de um modelo ER, passando pelo modelo lógico
+  e por fim a criação de tabelas em um sistema físico SQL, através do Sistema de
+  Gerenciamento de Banco de Dados MySQL.
+  Um conjunto de consultas é apresentado, juntamente com a descrição da aplicação
+  Web desenvolvida para acessar o banco de dados.
 \end{resumo}
 
 
-\section{General Information}
+\section{Introdução}
 
-All full papers and posters (short papers) submitted to some SBC conference,
-including any supporting documents, should be written in English or in
-Portuguese. The format paper should be A4 with single column, 3.5 cm for upper
-margin, 2.5 cm for bottom margin and 3.0 cm for lateral margins, without
-headers or footers. The main font must be Times, 12 point nominal size, with 6
-points of space before each paragraph. Page numbers must be suppressed.
+Este artigo começa descrevendo brevemente a base de dados apresentada em \url{http://dados.gov.br/dataset/taxas-de-rendimento-escolar-na-educacao-basica}. Esta base apresenta dados indicativos do Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira (Inep) sobre diferentes tipos de taxas escolares da educação básica brasileira: aprovação, reprovação e abadono. Estas taxas são separadas por escolas, por ano e por ano escolar na escola.
 
-Full papers must respect the page limits defined by the conference.
-Conferences that publish just abstracts ask for \textbf{one}-page texts.
+A fim de deixar a modelagem mais rica em relações, o nosso grupo criou mais uma entidade, representando empresas terceirizadas que prestam serviços às escolas.
 
-\section{First Page} \label{sec:firstpage}
+As modelagens das entidades no modelo ER e no lógico, e a subsequente tradução para modelo físico, foram realizadas com o uso do software brModelo.
 
-The first page must display the paper title, the name and address of the
-authors, the abstract in English and ``resumo'' in Portuguese (``resumos'' are
-required only for papers written in Portuguese). The title must be centered
-over the whole page, in 16 point boldface font and with 12 points of space
-before itself. Author names must be centered in 12 point font, bold, all of
-them disposed in the same line, separated by commas and with 12 points of
-space after the title. Addresses must be centered in 12 point font, also with
-12 points of space after the authors' names. E-mail addresses should be
-written using font Courier New, 10 point nominal size, with 6 points of space
-before and 6 points of space after.
+\section{Modelagem ER}
 
-The abstract and ``resumo'' (if is the case) must be in 12 point Times font,
-indented 0.8cm on both sides. The word \textbf{Abstract} and \textbf{Resumo},
-should be written in boldface and must precede the text.
+A modelagem Entidade-Relacionamento (Fig.1) leva em consideração os objetos mais importantes a serem modelados e os transforma em entidades. Sendo assim, temos 5 entidades:
 
-\section{CD-ROMs and Printed Proceedings}
+\begin{itemize}
+\item Escola
+\item Municipio
+\item Estado
+\item Taxa
+\item Terceirizada
+\end{itemize}
 
-In some conferences, the papers are published on CD-ROM while only the
-abstract is published in the printed Proceedings. In this case, authors are
-invited to prepare two final versions of the paper. One, complete, to be
-published on the CD and the other, containing only the first page, with
-abstract and ``resumo'' (for papers in Portuguese).
+Todos eles possuem um atributo identificador e pelo menos mais dois outros atributos, além da entidade Escola possuir um atributo (Telefone) multivalorado.
 
-\section{Sections and Paragraphs}
+As cardinalidades das relações presentes são 1:N e N:N.
 
-Section titles must be in boldface, 13pt, flush left. There should be an extra
-12 pt of space before each title. Section numbering is optional. The first
-paragraph of each section should not be indented, while the first lines of
-subsequent paragraphs should be indented by 1.27 cm.
+A relação N:N entre Escola e Terceirizada é uma relação que possui um atributo, representando a data do contrato dos serviços prestados pela empresa terceirizada.
 
-\subsection{Subsections}
-
-The subsection titles must be in boldface, 12pt, flush left.
-
-\section{Figures and Captions}\label{sec:figs}
-
-
-Figure and table captions should be centered if less than one line
-(Figure~\ref{fig:exampleFig1}), otherwise justified and indented by 0.8cm on
-both margins, as shown in Figure~\ref{fig:exampleFig2}. The caption font must
-be Helvetica, 10 point, boldface, with 6 points of space before and after each
-caption.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.5\textwidth]{fig1.jpg}
-\caption{A typical figure}
-\label{fig:exampleFig1}
+\begin{figure}
+  \centering
+    \includegraphics[scale=0.4]{er-diag.jpg}
+  \caption{Modelagem ER da base de dados}
 \end{figure}
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.3\textwidth]{fig2.jpg}
-\caption{This figure is an example of a figure caption taking more than one
-  line and justified considering margins mentioned in Section~\ref{sec:figs}.}
-\label{fig:exampleFig2}
+\section{Modelo Lógico}
+
+A transformação de modelo ER para lógico (Fig.2) dá-se de maneira semi-automática pelo software brModelo. Algumas configurações manuais são necessárias, assim como alguns ajustes no modelo gerado:
+
+\begin{itemize}
+\item \textbf{Atributo multivalorado Telefone: } foi criada uma tabela separada para tal, com chave estrangeira escola\_id para a respectiva escola. Havia a possibilidade de incluir os atributos de Telefone na tabela Escola, mas isto causaria grandes redundâncias.
+\item \textbf{Chave primária da tabela TerceirizadaEscola: } esta é uma tabela relacional, que guarda informações de todas as relações entre uma empresa e uma escola. Ela contém chaves estrangeiras referenciando as chaves primárias das respectivas tabelas do relacionamento. Estas chaves devem constituir a chave primária da nova tabela, o que não acontecia inicialmente no modelo gerado.
+\end{itemize}
+
+Podem ser informados os tipos de cada atributo de cada tabela na hora da criação do modelo lógico no brModelo. Isto facilita a futura tradução em modelo físico. É válido mencionar que a tabela Estado possui um campo que será uma imagem, e assim é do tipo BLOB (Binary Large Object), que representa no caso uma imagem, mas poderia representar arquivos de mídia, como áudio ou vídeo, ou até mesmo grandes documentos.
+
+\begin{figure}
+  \centering
+    \includegraphics[scale=0.45]{log-diag.jpg}
+  \caption{Modelo lógico da base de dados}
 \end{figure}
 
-In tables, try to avoid the use of colored or shaded backgrounds, and avoid
-thick, doubled, or unnecessary framing lines. When reporting empirical data,
-do not use more decimal digits than warranted by their precision and
-reproducibility. Table caption must be placed before the table (see Table 1)
-and the font used must also be Helvetica, 10 point, boldface, with 6 points of
-space before and after each caption.
+\subsection{Análise da forma normal}
 
-\begin{table}[ht]
-\centering
-\caption{Variables to be considered on the evaluation of interaction
-  techniques}
-\label{tab:exTable1}
-\includegraphics[width=.7\textwidth]{table.jpg}
-\end{table}
+Os dados nas planilhas da base de dados da qual extraímos os dados encontrava-se em nenhuma forma normal, sendo assim classificada como pertencente à 0FN.
 
-\section{Images}
+A modelagem apresentada encontra-se pelo menos na 3FN, pois não é encontrada dependência funcional nem parcial nem transitiva de chave. Isto foi garantido na hora de fazer a modelagem ER e a respectiva tradução para o modelo lógico. Um exemplo de situação que não permitiria a modelagem de estar na 2FN seria se as informações de escolas, municípios e estados estivessem todos na mesma tabela. Estado depende da escola, mas também depende de município que, por sua vez, depende do atributo escola.
 
-All images and illustrations should be in black-and-white, or gray tones,
-excepting for the papers that will be electronically available (on CD-ROMs,
-internet, etc.). The image resolution on paper should be about 600 dpi for
-black-and-white images, and 150-300 dpi for grayscale images.  Do not include
-images with excessive resolution, as they may take hours to print, without any
-visible difference in the result. 
+\section{Modelo físico}
+
+A tradução para o modelo físico também foi realizado pelo software brModelo. Isto é feito de maneira automática, mas uma pequena modificação (inserção do caractere ';' após cada comando SQL) também foi necessária.
+
+Após a criação de um arquivo com os comandos SQL para a criação das tabelas, este foi executado em um banco de dados, através do SGBD MySQL, e as tabelas foram criadas, ainda vazias.
+
+\section{Inserção de valores no banco de dados}
+
+A extração de dados das planilhas e a respectiva inserção no banco foram feitas em três passos:
+
+\begin{enumerate}
+\item Tradução do arquivo XLS das planilhas para o formato CSV
+\item Criação de scripts (em PHP e em Lua) que manipulam os dados dos arquivos .CSV e geram um outro .CSV, agora pronto para ser inserido no BD
+\item Inserção no BD, dos arquivos .CSV já tratados, através do phpMyAdmin, configurado em um servidor local.
+\end{enumerate}
+
+\section{Consultas}
+
+A seguir, apresentamos uma lista de consultas, com sua descrição (o que envolve e seu enunciado):
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  language=SQL
+}
+
+-- Id, nome, população e id do estado de todas os municípios do estado do Rio de Janeiro (envolve apenas seleção e projeção)
+\begin{lstlisting}[frame=single, style=customc]
+SELECT id, nome, populacao, estado_id AS uf FROM municipios WHERE uf = 'RJ';
+\end{lstlisting} 
+
+
+-- Nome, localização, rede e munícipio de todas escolas do estado do RJ ou do RS (envolve junção de apenas duas relações)
+\begin{lstlisting}[frame=single, style=customc]
+SELECT escola.nome, localizacao, rede, municipio.nome AS municipio, municipio.estado_id AS uf
+FROM escolas INNER JOIN municipios ON escolas.municipio_id=municipio.id
+WHERE uf = 'RJ' OR uf = 'RS';
+\end{lstlisting}
+
+-- Todas as escolas federais que não tem taxas associadas apesar de cadastradas no sistema (envolve junção externa de apenas duas relações)
+\begin{lstlisting}[frame=single, style=customc]
+SELECT nome, rede, localizacao
+FROM escolas LEFT JOIN taxas ON escolas.id=taxas.escola_id
+WHERE rede = 'Federal' AND taxas.id = null;
+\end{lstlisting}
+
+-- Nomes, localização e taxas de todas as escolas da rede Federal e suas respectivas taxas de aprovação do ensino medio caso existam (envolve junção externa de apenas duas relações)
+\begin{lstlisting}[frame=single, style=customc]
+SELECT nome, localizacao, (.colocar taxas aqui.)
+FROM escolas LEFT JOIN taxas ON escolas.id=taxas.escola_id
+WHERE rede = 'Federal' AND ( (taxas.tipo = null OR taxas.tipo = 'Aprovação') AND (taxas.serie = null or taxas.serie LIKE '%Médio'));
+\end{lstlisting}
+
+-- Obtém o nome, rede, localização e uf de todas as escolas da região Sudeste (envolve junção de três relações)
+\begin{lstlisting}[frame=single, style=customc]
+SELECT escolas.nome, rede, localizacao, uf
+FROM escolas INNER JOIN municipios ON escolas.municipio_id=municipio.id INNER JOIN estados ON estado.id=municipio.estado_id
+WHERE estados.regiao = 'Sudeste';
+\end{lstlisting}
+
+-- Obtém todos os telefones da escola de nome CEFET CELSO SUCKOW DA FONSECA (envolve junção de duas relações)
+\begin{lstlisting}[frame=single, style=customc]
+SELECT codigo, numero 
+FROM escolas INNER JOIN telefones ON telefones.escola_id=escolas.id
+WHERE nome = 'CEFET CELSO SUCKOW DA FONSECA';
+\end{lstlisting}
+
+-- Obtém o número de escolas cadastradas no sistema por estado
+\begin{lstlisting}[frame=single, style=customc]
+SELECT count(distinct escolas.id), estados.nome, uf, regiao, (bandeira?)
+FROM escolas INNER JOIN municipios ON escolas.municipio_id=municipio.id INNER JOIN estados ON estado.id=municipio.estado_id
+\end{lstlisting} 
+
 
 \section{References}
 
