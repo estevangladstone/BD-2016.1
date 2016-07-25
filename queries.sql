@@ -1,11 +1,13 @@
 -- Queries
 
 -- Envolve apenas seleção e projeção
+-- Obtém o id, nome, população, e UF de todos os municipios cadastrados com UF igual a RJ 
 select id, nome, populacao, estado_id as uf from municipios where uf = 'RJ';
 
 
 
 -- Envolve junção de apenas duas relações
+-- Obtém o nome, localização, rede, nome do municipio e UF de todas as escolas cuja UF é RJ ou RS
 select escola.nome, localizacao, rede, municipio.nome as municipio, municipio.estado_id as uf
 from escolas inner join municipios on escolas.municipio_id=municipio.id
 where uf = 'RJ' or uf = 'RS';
@@ -31,7 +33,7 @@ where rede = 'Federal' and ( (taxas.tipo = null or taxas.tipo = 'Aprovação') a
 
 
 -- Envolve junção de três relações
--- Obté o nome, rede, localização e uf de todas as escolas da região Sudeste 
+-- Obtém o nome, rede, localização e uf de todas as escolas da região Sudeste 
 select escolas.nome, rede, localizacao, uf
 from escolas inner join municipios on escolas.municipio_id=municipio.id inner join estados on estado.id=municipio.estado_id
 where estados.regiao = 'Sudeste';
@@ -42,6 +44,12 @@ select avg(taxas.valor) as media de aprovacao, uf, bandeira
 from escolas inner join taxas on escolas.id=taxas.escola_id inner join municipios on escolas.municipio_id=municipios.id inner join estados on estados.id=municipios.estado_id
 where taxas.serie = 12
 group by estado.uf;
+
+
+
+-- Consulta envovendo operações sobre conjuntos
+
+-- Consulta envovendo operações sobre conjuntos
 
 
 
