@@ -77,8 +77,8 @@ CREATE TABLE `Telefone` (
 --
 
 CREATE TABLE `TerceirizadaEscola` (
-  `terceirizada_id` int(11) NOT NULL,
-  `escola_id` int(11) NOT NULL
+  `escola_id` int(11) NOT NULL,
+  `terceirizada_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -147,12 +147,11 @@ ALTER TABLE `Terceirizada`
 -- AUTO_INCREMENT for dumped tables
 --
 
---
--- AUTO_INCREMENT for table `Taxa`
---
 ALTER TABLE `Taxa`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 ALTER TABLE `Terceirizada`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `Telefone`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- Constraints for dumped tables
