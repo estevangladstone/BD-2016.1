@@ -29,7 +29,7 @@ where estados.regiao = 'Sudeste';
 -- Envolve junção de duas relações
 -- Obtém todos os telefones da escola de nome CEFET CELSO SUCKOW DA FONSECA
 select codigo, numero 
-from escolas inner join telefones on telefones.id=escolas.id
+from escolas inner join telefones on telefones.escola_id=escolas.id
 where nome = 'CEFET CELSO SUCKOW DA FONSECA';
 
 -- Obtém o número de escolas cadastradas no sistema por estado
