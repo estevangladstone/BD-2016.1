@@ -4,8 +4,14 @@
 \usepackage[brazilian]{babel}
 \usepackage{graphicx,url}
 \usepackage{listings}
-\lstset{language=SQL} 
 
+\lstdefinestyle{customsql}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  language=SQL
+}
+ 
 %\usepackage[brazil]{babel}   
 \usepackage[latin1]{inputenc}  
 
@@ -118,72 +124,85 @@ A extração de dados das planilhas e a respectiva inserção no banco foram feitas 
 
 A seguir, apresentamos uma lista de consultas, com sua descrição (o que envolve e seu enunciado):
 
-\lstdefinestyle{customc}{
-  belowcaptionskip=1\baselineskip,
-  breaklines=true,
-  xleftmargin=\parindent,
-  language=SQL
-}
-
 -- Id, nome, população e id do estado de todas os municípios do estado do Rio de Janeiro (envolve apenas seleção e projeção)
-\begin{lstlisting}[frame=single, style=customc]
+\begin{lstlisting}[frame=single, style=customsql]
 SELECT id, nome, populacao, estado_id AS uf FROM municipios WHERE uf = 'RJ';
 \end{lstlisting} 
 
 
 -- Nome, localização, rede e munícipio de todas escolas do estado do RJ ou do RS (envolve junção de apenas duas relações)
-\begin{lstlisting}[frame=single, style=customc]
+\begin{lstlisting}[frame=single, style=customsql]
 SELECT escola.nome, localizacao, rede, municipio.nome AS municipio, municipio.estado_id AS uf
 FROM escolas INNER JOIN municipios ON escolas.municipio_id=municipio.id
 WHERE uf = 'RJ' OR uf = 'RS';
 \end{lstlisting}
 
 -- Todas as escolas federais que não tem taxas associadas apesar de cadastradas no sistema (envolve junção externa de apenas duas relações)
-\begin{lstlisting}[frame=single, style=customc]
+\begin{lstlisting}[frame=single, style=customsql]
 SELECT nome, rede, localizacao
 FROM escolas LEFT JOIN taxas ON escolas.id=taxas.escola_id
 WHERE rede = 'Federal' AND taxas.id = null;
 \end{lstlisting}
 
 -- Nomes, localização e taxas de todas as escolas da rede Federal e suas respectivas taxas de aprovação do ensino medio caso existam (envolve junção externa de apenas duas relações)
-\begin{lstlisting}[frame=single, style=customc]
+\begin{lstlisting}[frame=single, style=customsql]
 SELECT nome, localizacao, (.colocar taxas aqui.)
 FROM escolas LEFT JOIN taxas ON escolas.id=taxas.escola_id
 WHERE rede = 'Federal' AND ( (taxas.tipo = null OR taxas.tipo = 'Aprovação') AND (taxas.serie = null or taxas.serie LIKE '%Médio'));
 \end{lstlisting}
 
 -- Obtém o nome, rede, localização e uf de todas as escolas da região Sudeste (envolve junção de três relações)
-\begin{lstlisting}[frame=single, style=customc]
+\begin{lstlisting}[frame=single, style=customsql]
 SELECT escolas.nome, rede, localizacao, uf
 FROM escolas INNER JOIN municipios ON escolas.municipio_id=municipio.id INNER JOIN estados ON estado.id=municipio.estado_id
 WHERE estados.regiao = 'Sudeste';
 \end{lstlisting}
 
 -- Obtém todos os telefones da escola de nome CEFET CELSO SUCKOW DA FONSECA (envolve junção de duas relações)
-\begin{lstlisting}[frame=single, style=customc]
+\begin{lstlisting}[frame=single, style=customsql]
 SELECT codigo, numero 
 FROM escolas INNER JOIN telefones ON telefones.escola_id=escolas.id
 WHERE nome = 'CEFET CELSO SUCKOW DA FONSECA';
 \end{lstlisting}
 
 -- Obtém o número de escolas cadastradas no sistema por estado
-\begin{lstlisting}[frame=single, style=customc]
+\begin{lstlisting}[frame=single, style=customsql]
 SELECT count(distinct escolas.id), estados.nome, uf, regiao, (bandeira?)
 FROM escolas INNER JOIN municipios ON escolas.municipio_id=municipio.id INNER JOIN estados ON estado.id=municipio.estado_id
 \end{lstlisting} 
 
 
-\section{References}
+\section{Participações}
 
-Bibliographic references must be unambiguous and uniform.  We recommend giving
-the author names references in brackets, e.g. \cite{knuth:84},
-\cite{boulic:91}, and \cite{smith:99}.
+Todos os membros participaram indiretamente de todas as partes do trabalho. A seguir, segue mais detalhadamente, por ordem de participação, o que cada membro do grupo fez:
+\begin{itemize}
+  \item Estevan Gladstone
+  \begin{itemize}
+    \item Criação de consultas
+    \item Criação de scripts de manipulação para importação de dados para o banco de dados
+    \item Ajudou na aplicação web
+    \item Modelagem das entidades e tabelas
+  \end{itemize}
+  \item João Guio
+  \begin{itemize}
+    \item Criação de scripts de manipulação para importação de dados para o banco de dados
+	\item Modelagem das entidades e tabelas
+    \item Criação de consultas
+    \item Geração de dados abstratos falsos para as tabelas inventadas
+  \end{itemize}
+  \item Matheus Andrade
+  \begin{itemize}
+    \item Desenvolvimento da aplicação web
+    \item Modelagem das entidades e tabelas
+  \end{itemize}
+  \item Tiago Montalvão
+  \begin{itemize}
+    \item Escrita do relatório
+	\item Exportação de planilhas para arquivos CSV
+    \item Criação de consultas
+    \item Modelagem das entidades e tabelas
+  \end{itemize}
+\end{itemize}
 
-The references must be listed using 12 point font size, with 6 points of space
-before each reference. The first line of each reference should not be
-indented, while the subsequent should be indented by 0.5 cm.
-
-\bibliographystyle{sbc}
-\bibliography{sbc-template}
 
 \end{document}
