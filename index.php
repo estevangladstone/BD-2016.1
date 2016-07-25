@@ -27,11 +27,7 @@
 				<!-- Cabeçalho -->
 				<thead>
 					<?php foreach ($_SESSION['colunas'] as $column) { ?>
-						<?php if($column == 'id') { ?>
-							<th>#</th>
-						<?php } else { ?>
-							<th><?php echo $column ?></th>
-						<?php } ?>
+						<th><?php echo $column ?></th>
 					<?php } unset($_SESSION['colunas']); //endforeach ?>
 				</thead>
 				<!-- Linhas -->
