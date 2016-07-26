@@ -41,7 +41,7 @@ $conn->close();
 
     <div class="container">
       <div class="masthead">
-        <h3 class="text-muted">Project name</h3>
+        <h3 class="text-muted">Trabalho de Banco de Dados</h3>
         <nav>
           <ul class="nav nav-justified">
             <li><a href="escolas.php">Escolas</a></li>
