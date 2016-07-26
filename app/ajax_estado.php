@@ -13,7 +13,6 @@ if(!empty($_POST['uf'])){
     $result1 = $conn->query($sql);
 
     $sql2 = "SELECT avg(t.valor) as media,t.tipo as tipo, m.estado_id as uf FROM escola as e INNER JOIN municipio as m on m.id=e.municipio_id INNER JOIN taxa as t on t.escola_id = e.id WHERE m.estado_id='".$_POST['uf']."' GROUP by t.tipo";
-    
     $result2 = $conn->query($sql2);
 }
 $html ="Numero de avaliadas neste estado:<span>(".$result1->fetch_assoc()['n_escolas'].") </span><br>";

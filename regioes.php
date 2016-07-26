@@ -9,7 +9,8 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT e.id,e.rede, e.nome,e.localizacao,m.nome FROM escola AS e INNER JOIN Municipio AS m ON e.municipio_id = m.id ";
+//$sql = "SELECT e.id,e.rede, e.nome as nome,e.localizacao,s.regiao as regiao FROM escola AS e INNER JOIN Municipio AS m ON e.municipio_id = m.id INNER JOIN estado as s on s.uf=m.estado_id ORDER BY s.regiao";
+$sql = "SELECT e.regiao from estado as e GROUP BY e.regiao ";
 $result = $conn->query($sql);
 $conn->close();
 ?>
@@ -36,7 +37,6 @@ $conn->close();
     <!-- Custom styles for this template -->
     <link href="justified-nav.css" rel="stylesheet">
   </head>
-
   <body>
 
     <div class="container">
@@ -68,10 +68,7 @@ $conn->close();
         <table class="table table-hover" id="escolas">
         <thead>
           <tr>
-            <th>Rede</th>
-            <th>Nome</th>
-            <th>Localização</th>
-            <th>Município</th>
+            <th>Regiao</th>
           </tr>
         </thead>
         <tbody>
@@ -79,10 +76,7 @@ $conn->close();
           if ($result->num_rows > 0) {
             while($row = $result->fetch_array()) {
               echo "<tr>";
-                echo"<td>".$row['rede']."</td>";
-                echo"<td><a href='#'  data-toggle=\"modal\" data-target=\"#myModal\" data-id='".$row['id']."' data-nome='".$row['2']."'> ".$row['2']."</a></td>";
-                echo"<td>".$row['localizacao']."</td>";
-                echo"<td>".$row['nome']."</td>";
+                echo"<td><a href='#'  data-toggle=\"modal\" data-target=\"#myModal\" data-regiao='".$row['regiao']."'>".$row['regiao']."</td>";
               echo "</tr>";
             }
         } else {
@@ -94,7 +88,7 @@ $conn->close();
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -144,14 +138,14 @@ $conn->close();
 
       $('#myModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('nome') // Extract info from data-* attributes
+        var recipient = button.data('regiao') // Extract info from data-* attributes
 
 
         $.ajax({
           type: 'post',
           dataType: 'html',
-          url: 'app/ajax_escola.php',
-          data:{'id_escola':button.data('id')},
+          url: 'app/ajax_regiao.php',
+          data:{'regiao':button.data('regiao')},
           success:function(dataset) {
 //            $('#codigo').text("("+data.codigo+")")
 //            $('#numero').text(data.numero)
