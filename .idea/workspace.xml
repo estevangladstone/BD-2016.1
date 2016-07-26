@@ -25,20 +25,19 @@
       <file leaf-file-name="escolas.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/escolas.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.518851">
-              <caret line="158" column="22" selection-start-line="158" selection-start-column="22" selection-end-line="158" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.3357271">
+              <caret line="11" column="124" selection-start-line="11" selection-start-column="124" selection-end-line="11" selection-end-column="124" />
               <folding>
-                <element signature="e#4185#5205#0#HTML" expanded="false" />
-                <element signature="e#4243#5185#0#HTML" expanded="false" />
-                <marker date="1469498799986" expanded="true" signature="250:365" placeholder="SELECT e.id,... escola" />
-                <marker date="1469498799986" expanded="true" signature="250:373" placeholder="SELECT e.id,... escola" />
-                <marker date="1469498799986" expanded="true" signature="3236:4011" placeholder="..." />
-                <marker date="1469498799986" expanded="true" signature="3285:4000" placeholder="..." />
-                <marker date="1469498799986" expanded="true" signature="3321:3987" placeholder="..." />
-                <marker date="1469498799986" expanded="true" signature="3358:3583" placeholder="..." />
-                <marker date="1469498799986" expanded="true" signature="3618:3824" placeholder="..." />
-                <marker date="1469498799986" expanded="true" signature="3861:3972" placeholder="..." />
-                <marker date="1469498799986" expanded="false" signature="4185:4197" placeholder="{...}" />
+                <element signature="e#4053#5073#0#HTML" expanded="false" />
+                <element signature="e#4111#5053#0#HTML" expanded="false" />
+                <marker date="1469501109921" expanded="true" signature="250:365" placeholder="SELECT e.id,... escola" />
+                <marker date="1469501109921" expanded="true" signature="3229:3879" placeholder="..." />
+                <marker date="1469501109921" expanded="true" signature="3278:3868" placeholder="..." />
+                <marker date="1469501109921" expanded="true" signature="3314:3855" placeholder="..." />
+                <marker date="1469501109921" expanded="true" signature="3351:3576" placeholder="..." />
+                <marker date="1469501109921" expanded="true" signature="3611:3692" placeholder="..." />
+                <marker date="1469501109921" expanded="true" signature="3729:3840" placeholder="..." />
+                <marker date="1469501109921" expanded="false" signature="4053:4065" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -47,11 +46,16 @@
       <file leaf-file-name="ajax_escola.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/ajax_escola.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.461538">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+            <state vertical-scroll-proportion="-7.6923075">
+              <caret line="18" column="55" selection-start-line="18" selection-start-column="55" selection-end-line="18" selection-end-column="55" />
               <folding>
-                <marker date="1469498451083" expanded="true" signature="288:294" placeholder="SELECT e.id,... escola" />
-                <marker date="1469498451083" expanded="true" signature="288:328" placeholder="SELECT * FRO... escola" />
+                <marker date="1469501065136" expanded="true" signature="288:294" placeholder="SELECT e.id,... escola" />
+                <marker date="1469501065136" expanded="true" signature="288:328" placeholder="SELECT * FRO... escola" />
+                <marker date="1469501065136" expanded="true" signature="437:495" placeholder="SELECT valor... taxa" />
+                <marker date="1469501065136" expanded="true" signature="437:532" placeholder="SELECT sum(v... taxa" />
+                <marker date="1469501065136" expanded="true" signature="437:533" placeholder="SELECT sum(v... taxa" />
+                <marker date="1469501065136" expanded="true" signature="798:965" placeholder="..." />
+                <marker date="1469501065136" expanded="true" signature="924:965" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -295,14 +299,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-30.076923">
-          <caret line="46" column="53" selection-start-line="46" selection-start-column="53" selection-end-line="46" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/arquivo.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.576923">
@@ -311,33 +307,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-30.076923">
+          <caret line="46" column="53" selection-start-line="46" selection-start-column="53" selection-end-line="46" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/ajax_escola.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.461538">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        <state vertical-scroll-proportion="-7.6923075">
+          <caret line="18" column="55" selection-start-line="18" selection-start-column="55" selection-end-line="18" selection-end-column="55" />
           <folding>
-            <marker date="1469498451083" expanded="true" signature="288:294" placeholder="SELECT e.id,... escola" />
-            <marker date="1469498451083" expanded="true" signature="288:328" placeholder="SELECT * FRO... escola" />
+            <marker date="1469501065136" expanded="true" signature="288:294" placeholder="SELECT e.id,... escola" />
+            <marker date="1469501065136" expanded="true" signature="288:328" placeholder="SELECT * FRO... escola" />
+            <marker date="1469501065136" expanded="true" signature="437:495" placeholder="SELECT valor... taxa" />
+            <marker date="1469501065136" expanded="true" signature="437:532" placeholder="SELECT sum(v... taxa" />
+            <marker date="1469501065136" expanded="true" signature="437:533" placeholder="SELECT sum(v... taxa" />
+            <marker date="1469501065136" expanded="true" signature="798:965" placeholder="..." />
+            <marker date="1469501065136" expanded="true" signature="924:965" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/escolas.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.518851">
-          <caret line="158" column="22" selection-start-line="158" selection-start-column="22" selection-end-line="158" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.3357271">
+          <caret line="11" column="124" selection-start-line="11" selection-start-column="124" selection-end-line="11" selection-end-column="124" />
           <folding>
-            <element signature="e#4185#5205#0#HTML" expanded="false" />
-            <element signature="e#4243#5185#0#HTML" expanded="false" />
-            <marker date="1469498799986" expanded="true" signature="250:365" placeholder="SELECT e.id,... escola" />
-            <marker date="1469498799986" expanded="true" signature="250:373" placeholder="SELECT e.id,... escola" />
-            <marker date="1469498799986" expanded="true" signature="3236:4011" placeholder="..." />
-            <marker date="1469498799986" expanded="true" signature="3285:4000" placeholder="..." />
-            <marker date="1469498799986" expanded="true" signature="3321:3987" placeholder="..." />
-            <marker date="1469498799986" expanded="true" signature="3358:3583" placeholder="..." />
-            <marker date="1469498799986" expanded="true" signature="3618:3824" placeholder="..." />
-            <marker date="1469498799986" expanded="true" signature="3861:3972" placeholder="..." />
-            <marker date="1469498799986" expanded="false" signature="4185:4197" placeholder="{...}" />
+            <element signature="e#4053#5073#0#HTML" expanded="false" />
+            <element signature="e#4111#5053#0#HTML" expanded="false" />
+            <marker date="1469501109921" expanded="true" signature="250:365" placeholder="SELECT e.id,... escola" />
+            <marker date="1469501109921" expanded="true" signature="3229:3879" placeholder="..." />
+            <marker date="1469501109921" expanded="true" signature="3278:3868" placeholder="..." />
+            <marker date="1469501109921" expanded="true" signature="3314:3855" placeholder="..." />
+            <marker date="1469501109921" expanded="true" signature="3351:3576" placeholder="..." />
+            <marker date="1469501109921" expanded="true" signature="3611:3692" placeholder="..." />
+            <marker date="1469501109921" expanded="true" signature="3729:3840" placeholder="..." />
+            <marker date="1469501109921" expanded="false" signature="4053:4065" placeholder="{...}" />
           </folding>
         </state>
       </provider>

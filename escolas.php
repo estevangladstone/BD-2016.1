@@ -9,7 +9,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT e.id,e.rede, e.nome,e.localizacao,m.nome FROM escola AS e INNER JOIN Municipio AS m ON e.municipio_id = m.id LIMIT 1";
+$sql = "SELECT e.id,e.rede, e.nome,e.localizacao,m.nome FROM escola AS e INNER JOIN Municipio AS m ON e.municipio_id = m.id ";
 $result = $conn->query($sql);
 $conn->close();
 ?>
@@ -101,9 +101,7 @@ $conn->close();
             <h4 class="modal-title" id="myModalLabel">Modal title</h4>
           </div>
           <div class="modal-body">
-<!--            Telefone de Contato:-->
-<!--            <span id="codigo"></span>-->
-<!--            <span id="numero"></span>-->
+<!--
 <!--            <br>-->
             <div id="teste"></div>
           </div>
@@ -147,24 +145,22 @@ $conn->close();
       } );
 
       $('#myModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
         var recipient = button.data('nome') // Extract info from data-* attributes
 
 
         $.ajax({
           type: 'post',
-          dataType: 'json',
+          dataType: 'html',
           url: 'app/ajax_escola.php',
           data:{'id_escola':button.data('id')},
-          success:function(data) {
-            alert(data)
+          success:function(dataset) {
 //            $('#codigo').text("("+data.codigo+")")
 //            $('#numero').text(data.numero)
-            $('#teste').text(data)
-
+            $('#teste').html(dataset)
           }
         });
 
-        var button = $(event.relatedTarget) // Button that triggered the modal
         var modal = $(this)
         modal.find('.modal-title').text(recipient)
 
