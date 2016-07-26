@@ -9,17 +9,8 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT e.rede, e.nome,s.nome as estado FROM escola AS e INNER JOIN municipio AS m ON e.municipio_id = m.id INNER JOIN estado as s ON s.uf = m.estado_id";
+$sql = "SELECT e.id,e.rede, e.nome,e.localizacao,m.nome FROM escola AS e INNER JOIN Municipio AS m ON e.municipio_id = m.id ";
 $result = $conn->query($sql);
-
-$sql2 = "SELECT uf,nome, regiao FROM estado AS e ORDER BY nome ASC Limit 9";
-$estadosAsc = $conn->query($sql2);
-
-$sql3 = "(SELECT  * FROM estado ORDER BY nome DESC Limit 9) ORDER by nome ASC";
-$estadosDesc = $conn->query($sql3);
-
-$sql4 = "SELECT * FROM estado  WHere uf > 'GO' and uf< 'RJ' ORDER BY nome ASC";
-$estadosMid = $conn->query($sql4);
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -45,15 +36,17 @@ $conn->close();
     <!-- Custom styles for this template -->
     <link href="justified-nav.css" rel="stylesheet">
   </head>
+
   <body>
+
     <div class="container">
       <div class="masthead">
         <h3 class="text-muted">Project name</h3>
         <nav>
           <ul class="nav nav-justified">
             <li><a href="escolas.php">Escolas</a></li>
-            <li class="active"><a href="estados.php">Estados</a></li>
-            <li><a href="regioes.php">Regiões</a></li>
+            <li><a href="estados.php">Estados</a></li>
+            <li class="active"><a href="regioes.php">Regiões</a></li>
           </ul>
         </nav>
       </div>
@@ -72,111 +65,34 @@ $conn->close();
       </div>
 
       <div class="row">
-        <div class="col-md-4">
-          <table class="table table-hover">
-            <thead>
-            <tr>
-              <th>UF</th>
-              <th>Nome</th>
-              <th>Região</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            if ($estadosAsc->num_rows > 0) {
-              while($row = $estadosAsc->fetch_array()) {
-                echo "<tr>";
-                echo"<td>".$row['uf']."</td>";
-                echo"<td><a href='#'  data-toggle=\"modal\" data-target=\"#myModal\" data-nome='".$row['nome']."' data-uf='".$row['uf']."'> ".$row['nome']."</a></td>";
-                echo"<td>".$row['regiao']."</td>";
-                echo "</tr>";
-              }
-            } else {
-              echo "0 results";
-            }?>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-4">
-          <table class="table table-hover">
-            <thead>
-            <tr>
-              <th>UF</th>
-              <th>Nome</th>
-              <th>Região</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            if ($estadosMid->num_rows > 0) {
-              while($row = $estadosMid->fetch_array()) {
-                echo "<tr>";
-                echo"<td>".$row['uf']."</td>";
-                echo"<td><a href='#'  data-toggle=\"modal\" data-target=\"#myModal\" data-nome='".$row['nome']."' data-uf='".$row['uf']."'> ".$row['nome']."</a></td>";
-
-                echo"<td>".$row['regiao']."</td>";
-                echo "</tr>";
-              }
-            } else {
-              echo "0 results";
-            }?>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-4">
-          <table class="table table-hover">
-            <thead>
-            <tr>
-              <th>UF</th>
-              <th>Nome</th>
-              <th>Região</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            if ($estadosDesc->num_rows > 0) {
-              while($row = $estadosDesc->fetch_array()) {
-                echo "<tr>";
-                echo"<td>".$row['uf']."</td>";
-                echo"<td><a href='#'  data-toggle=\"modal\" data-target=\"#myModal\" data-nome='".$row['nome']."' data-uf='".$row['uf']."'> ".$row['nome']."</a></td>";
-                echo"<td>".$row['regiao']."</td>";
-                echo "</tr>";
-              }
-            } else {
-              echo "0 results";
-            }?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="row">
         <table class="table table-hover" id="escolas">
-          <thead>
+        <thead>
           <tr>
             <th>Rede</th>
             <th>Nome</th>
-            <th>Estado</th>
+            <th>Localização</th>
+            <th>Município</th>
           </tr>
-          </thead>
-          <tbody>
-          <?php
+        </thead>
+        <tbody>
+        <?php
           if ($result->num_rows > 0) {
             while($row = $result->fetch_array()) {
               echo "<tr>";
-              echo"<td>".$row['rede']."</td>";
-              echo"<td>".$row['nome']."</td>";
-              echo"<td>".$row['estado']."</td>";
+                echo"<td>".$row['rede']."</td>";
+                echo"<td><a href='#'  data-toggle=\"modal\" data-target=\"#myModal\" data-id='".$row['id']."' data-nome='".$row['2']."'> ".$row['2']."</a></td>";
+                echo"<td>".$row['localizacao']."</td>";
+                echo"<td>".$row['nome']."</td>";
               echo "</tr>";
             }
-          } else {
-            echo "0 results";
-          }?>
-          </tbody>
-        </table>
-      </div>
+        } else {
+          echo "0 results";
+        }?>
+        </tbody>
+      </table></div>
     </div>
 
+    <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -230,11 +146,12 @@ $conn->close();
         var button = $(event.relatedTarget) // Button that triggered the modal
         var recipient = button.data('nome') // Extract info from data-* attributes
 
+
         $.ajax({
           type: 'post',
           dataType: 'html',
-          url: 'app/ajax_estado.php',
-          data:{'uf':button.data('uf')},
+          url: 'app/ajax_escola.php',
+          data:{'id_escola':button.data('id')},
           success:function(dataset) {
 //            $('#codigo').text("("+data.codigo+")")
 //            $('#numero').text(data.numero)

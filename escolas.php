@@ -46,7 +46,7 @@ $conn->close();
           <ul class="nav nav-justified">
             <li class="active"><a href="escolas.php">Escolas</a></li>
             <li><a href="estados.php">Estados</a></li>
-            <li><a href="regioes.html">Regiões</a></li>
+            <li><a href="regioes.php">Regiões</a></li>
           </ul>
         </nav>
       </div>
@@ -101,8 +101,6 @@ $conn->close();
             <h4 class="modal-title" id="myModalLabel">Modal title</h4>
           </div>
           <div class="modal-body">
-<!--
-<!--            <br>-->
             <div id="teste"></div>
           </div>
           <div class="modal-footer">
