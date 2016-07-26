@@ -5,7 +5,7 @@ if(!empty($_GET['consulta'])){
     try {
         $user = 'root';
         $pass = '';
-        $dbh = new PDO('mysql:host=localhost;dbname=trabalhoBD;charset=utf8', $user, $pass);
+        $dbh = new PDO('mysql:host=localhost;dbname=trabalhobd;charset=utf8', $user, $pass);
         
         // $query = 'UPDATE criterios set total_vagas=10 WHERE id=4';
         // $query = "select estados.nome as nomeEstado, municipios.nome as nomeMunicipio, estados.uf from municipios join estados on municipios.estado_id=estados.uf limit 10";

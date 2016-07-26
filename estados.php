@@ -9,16 +9,16 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT e.rede, e.nome,s.nome as estado FROM escola AS e INNER JOIN municipio AS m ON e.municipio_id = m.id INNER JOIN estado as s ON s.uf = m.estado_id";
+$sql = "SELECT e.rede, e.nome,s.nome as Estado FROM Escola AS e INNER JOIN Municipio AS m ON e.municipio_id = m.id INNER JOIN Estado as s ON s.uf = m.estado_id";
 $result = $conn->query($sql);
 
-$sql2 = "SELECT uf,nome, regiao FROM estado AS e ORDER BY nome ASC Limit 9";
+$sql2 = "SELECT uf,nome, regiao FROM Estado AS e ORDER BY nome ASC Limit 9";
 $estadosAsc = $conn->query($sql2);
 
-$sql3 = "(SELECT  * FROM estado ORDER BY nome DESC Limit 9) ORDER by nome ASC";
+$sql3 = "(SELECT  * FROM Estado ORDER BY nome DESC Limit 9) ORDER by nome ASC";
 $estadosDesc = $conn->query($sql3);
 
-$sql4 = "SELECT * FROM estado  WHere uf > 'GO' and uf< 'RJ' ORDER BY nome ASC";
+$sql4 = "SELECT * FROM Estado WHERE uf > 'GO' and uf< 'RJ' ORDER BY nome ASC";
 $estadosMid = $conn->query($sql4);
 $conn->close();
 ?>
@@ -48,7 +48,7 @@ $conn->close();
   <body>
     <div class="container">
       <div class="masthead">
-        <h3 class="text-muted">Trabalho de Banco de Dados</h3>
+        <h3 class="text-muted">Taxas de Rendimento Escolar na Educação Básica</h3>
         <nav>
           <ul class="nav nav-justified">
             <li><a href="escolas.php">Escolas</a></li>

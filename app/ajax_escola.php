@@ -9,11 +9,11 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 if(!empty($_POST['id_escola'])){
-    $sql = "SELECT * FROM telefone WHERE escola_id= ".$_POST['id_escola'];
+    $sql = "SELECT * FROM Telefone WHERE escola_id= ".$_POST['id_escola'];
     $result1 = $conn->query($sql);
     $fet = $result1->fetch_assoc();
 
-    $taxas = "SELECT sum(valor) as soma, tipo FROM taxa WHERE escola_id=".$_POST['id_escola']." GROUP BY tipo";
+    $taxas = "SELECT sum(valor) as soma, tipo FROM Taxa WHERE escola_id=".$_POST['id_escola']." GROUP BY tipo";
     $result2 = $conn->query($taxas);
 }
 $html ="Telefone de Contato:<span>(".$fet['codigo'].") ".$fet['numero']."</span>";
