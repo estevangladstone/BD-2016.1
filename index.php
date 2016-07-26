@@ -12,6 +12,18 @@
  </head>
 <body>
 	<div class="container">
+		<div class="masthead">
+			<h3 class="text-muted">Trabalho de Banco de Dados</h3>
+			<nav>
+				<ul class="nav nav-justified">
+					<li><a href="escolas.php">Escolas</a></li>
+					<li><a href="estados.php">Estados</a></li>
+					<li><a href="regioes.php">Regiões</a></li>
+					<li class="active"><a href="index.php">Consulta</a></li>
+				</ul>
+			</nav>
+		</div>
+
 		<form id="form" action="index.php" method="get">
 			<div class="input-group">
 				<input type="text" id="consulta" class="form-control" name="consulta" placeholder="Digite sua consulta...">

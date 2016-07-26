@@ -47,22 +47,12 @@ $conn->close();
             <li class="active"><a href="escolas.php">Escolas</a></li>
             <li><a href="estados.php">Estados</a></li>
             <li><a href="regioes.php">Regiões</a></li>
+            <li><a href="index.php">Consulta</a></li>
           </ul>
         </nav>
       </div>
 
-      <div class="row consulta">
-        <form id="form" action="app/arquivo.php" method="get">
-          <div class="input-group">
-            <input type="text" id="consulta" class="form-control" name="consulta" placeholder="Digite sua consulta...">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="submit">
-                      <span class="glyphicon glyphicon-search"></span>
-                    </button>
-				</span>
-          </div>
-        </form>
-      </div>
+
 
       <div class="row">
         <table class="table table-hover" id="escolas">
