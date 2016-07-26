@@ -9,7 +9,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT e.id,e.rede, e.nome,e.localizacao,m.nome FROM escola AS e INNER JOIN Municipio AS m ON e.municipio_id = m.id ";
+$sql = "SELECT e.id,e.rede, e.nome,e.localizacao,m.nome FROM Escola AS e INNER JOIN Municipio AS m ON e.Municipio_id = m.id ";
 $result = $conn->query($sql);
 $conn->close();
 ?>
@@ -24,7 +24,7 @@ $conn->close();
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Justified Nav Template for Bootstrap</title>
+    <title>Taxas de Rendimento Escolar na Educação Básica</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -41,7 +41,7 @@ $conn->close();
 
     <div class="container">
       <div class="masthead">
-        <h3 class="text-muted">Project name</h3>
+        <h3 class="text-muted">Taxas de Rendimento Escolar na Educação Básica</h3>
         <nav>
           <ul class="nav nav-justified">
             <li class="active"><a href="escolas.php">Escolas</a></li>

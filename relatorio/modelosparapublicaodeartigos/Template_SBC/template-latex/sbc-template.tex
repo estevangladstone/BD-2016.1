@@ -224,6 +224,14 @@ WHERE Taxa.serie = 12 AND Taxa.tipo = 'Aprovação'
 GROUP BY Escola.rede;
 \end{lstlisting}
 
+\section{Aplicação Web}
+
+A aplicação foi desenvolvida em PHP como linguagem server-side, com auxilio de css e html para client-side. A aplicação web desenvolvida para consulta dos dados conta com uma divisão entre algumas entidades do banco e também alguns atributos. São elas Escolas, Estados e Regiões. Foram também oferecidas outras formas de consulta como um campo para consultas escritas diretamente em sql.Para cada divisão são fornecidas oportunidades de consulta baseadas na divisão escolhida.
+
+Na aba Escolas temos disponível a listagem de todas as escolas disponíveis como página inicial da divisão. Fica disponível para consultar as taxas e telefones de uma escola por nome dentre outros atributos.
+Na aba de Estados, é disponibilizada uma listagem com todas as escolas por Estado como página inicial da divisão. Fica disponível também a média de taxas de aprovação do terceiro ano do ensino medio por Estado.
+Na aba Regiões fica disponível a listagem de Escolas por região, como também a contagem de escolas com taxas de aprovação acima de certo valor.
+
 \section{Participações}
 
 Todos os membros participaram indiretamente de todas as partes do trabalho. A seguir, segue mais detalhadamente, por ordem de participação, o que cada membro do grupo fez:
@@ -255,6 +263,11 @@ Todos os membros participaram indiretamente de todas as partes do trabalho. A se
     \item Modelagem das entidades e tabelas
   \end{itemize}
 \end{itemize}
+
+\section{Conclusão}
+O grupo pode neste trabalho ter a experiência de tratar um volume grande de dados. A necessidade de alinhar conhecimentos em linguagens de programação para poder melhor manipular os dados foi rapidamente percebida, e assim auxiliou na decisão de divisão de tarefas. Consolidamos diversos conteúdos aprendidos em aula, e a reaprendizagem de que existem diversos caminhos para resolver o mesmo problema quando trabalha-se com SQL.
+
+Com este projeto, o grupo conseguiu colocar em prática todo o conteúdo aprendido durante o semestre na disciplina de Banco de Dados. Foi uma forma de consolidar o que foi aprendido, agora na prática, e ensinar o aluno a trabalhar com uma modelagem e manutenção de um banco de dados, algo pouco absorvido apenas dentro da sala de aula e possível de ser aprendido apenas com a prática.
 
 
 \end{document}
